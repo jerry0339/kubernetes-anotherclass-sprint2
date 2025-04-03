@@ -73,7 +73,7 @@ spec:
       volumes:
         - name: files
           persistentVolumeClaim:
-            claimName: rook-ceph-pvc # api-tester-2231-files
+            claimName: api-tester-2231-files
         - name: secret-datasource
           secret:
             secretName: api-tester-2231-postgresql
