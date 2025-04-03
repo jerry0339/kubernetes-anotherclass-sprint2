@@ -33,7 +33,7 @@ spec:
         kubernetes.io/hostname: k8s-worker-01
       containers:
         - name: api-tester-1
-          image: 1pro/api-tester:v1.0.0
+          image: jerry0339/api-tester:v1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
