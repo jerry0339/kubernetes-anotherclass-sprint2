@@ -12,16 +12,16 @@ pipeline {
     }
 
     environment {
-        // 본인의 username으로 하실 분은 수정해주세요.
         DOCKERHUB_USERNAME = 'jerry0339'
         GITHUB_URL = 'https://github.com/jerry0339/kubernetes-anotherclass-sprint2.git'
 
         APP_VERSION = '1.1.2'
-        BUILD_DATE = sh(script: "echo `date +%y%m%d.%H%M%S`", returnStdout: true).trim()
         // %y%m%d.%H%M%S: 년월일.시분초
+        // default: UTC 기준, 한국 시간(KST)으로 변경하려면 Jenkins JVM 옵션 변경해야 함
+        BUILD_DATE = sh(script: "echo `date +%y%m%d.%H%M%S`", returnStdout: true).trim()
         TAG = "${APP_VERSION}-" + "${BUILD_DATE}"
 
-        // 실습 넘버링
+        // sparseCheckoutPath 설정용 환경 변수
         CLASS_NUM = '2232'
     }
 
@@ -57,7 +57,7 @@ pipeline {
 
                 script{
 
-                    // 도커 로그인
+                    // 도커 로그인 - Jenkins Credentials에 저장된 데이터 이용
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh "echo " + '${PASSWORD}' + " | docker login -u " + '${USERNAME}' + " --password-stdin"
                     }
